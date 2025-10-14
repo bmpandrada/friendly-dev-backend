@@ -8,8 +8,8 @@ export default [
   {
     name: 'strapi::session',
     config: {
-      secure: false,       // ✅ important
-      sameSite: 'none',    // ✅ allows cross-site admin
+      secure: true,       // ✅ must be true for HTTPS in production
+      sameSite: 'none',   // ✅ allows cross-site admin
     },
   },
   'strapi::favicon',
