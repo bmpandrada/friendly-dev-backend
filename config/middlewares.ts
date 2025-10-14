@@ -5,7 +5,13 @@ export default [
   'strapi::poweredBy',
   'strapi::query',
   'strapi::body',
-  'strapi::session',
+  {
+    name: 'strapi::session',
+    config: {
+      secure: false,       // ✅ important
+      sameSite: 'none',    // ✅ allows cross-site admin
+    },
+  },
   'strapi::favicon',
   'strapi::public',
   {
@@ -16,13 +22,7 @@ export default [
         directives: {
           'connect-src': ["'self'", 'https:'],
           'img-src': ["'self'", 'data:', 'blob:', 'market-assets.strapi.io', 'res.cloudinary.com'],
-          'media-src': [
-            "'self'",
-            'data:',
-            'blob:',
-            'market-assets.strapi.io',
-            'res.cloudinary.com',
-          ],
+          'media-src': ["'self'", 'data:', 'blob:', 'market-assets.strapi.io', 'res.cloudinary.com'],
           upgradeInsecureRequests: null,
         },
       },
