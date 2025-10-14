@@ -1,15 +1,19 @@
 export default [
-  'strapi::logger',
   'strapi::errors',
   'strapi::cors',
   'strapi::poweredBy',
+  'strapi::logger',
   'strapi::query',
   'strapi::body',
   {
     name: 'strapi::session',
     config: {
-      secure: true,       // ✅ must be true for HTTPS in production
-      sameSite: 'none',   // ✅ allows cross-site admin
+      key: 'strapi.sid',
+      secret: process.env.APP_KEYS?.split(',') || ['default_key'],
+      secure: process.env.NODE_ENV === 'production', // ✅ secure only in production
+      sameSite: 'none',
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24, // 1 day
     },
   },
   'strapi::favicon',
@@ -21,8 +25,8 @@ export default [
         useDefaults: true,
         directives: {
           'connect-src': ["'self'", 'https:'],
-          'img-src': ["'self'", 'data:', 'blob:', 'market-assets.strapi.io', 'res.cloudinary.com'],
-          'media-src': ["'self'", 'data:', 'blob:', 'market-assets.strapi.io', 'res.cloudinary.com'],
+          'img-src': ["'self'", 'data:', 'blob:', 'res.cloudinary.com'],
+          'media-src': ["'self'", 'data:', 'blob:', 'res.cloudinary.com'],
           upgradeInsecureRequests: null,
         },
       },
